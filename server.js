@@ -19,7 +19,28 @@ mongoose.connect(
 
 mongoose.set('debug', true);
 
-app.listen(PORT, () => {
-    console.log(`App running on port ${PORT}!`);
+// Create a new notebook
+app.post('/submit', ({ body }, res) => {
+    User.create(body)
+      .then(dbUserData => {
+        res.json(dbUserData);
+      })
+      .catch(err => {
+        res.json(err);
+      });
   });
   
+  // Retrieve all users
+  app.get('/users', (req, res) => {
+    User.find()
+      .then(dbUserData => {
+        res.json(dbUserData);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+
+app.listen(PORT, () => {
+  console.log(`App running on port ${PORT}!`);
+});

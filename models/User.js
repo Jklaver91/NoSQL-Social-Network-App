@@ -1,15 +1,15 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const UserSchema = new Schema({
   username: {
     type: String,
-    required: 'Username is Required',
-    trim: true
+    trim: true,
+    required: 'Username is Required'
   },
   password: {
     type: String,
     required: true,
-    validate: [(newText) => newText.length <= 6, 'Passwrod is Required'],
+    minLength: 6,
     trim: true
   },
   email: {
