@@ -30,6 +30,18 @@ const userController = {
         })
         .catch(err => res.status(400).json(err));
     },
+    updateUsers({ params, body }, res) {
+        User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+            .then(userData => {
+                if(!userData) {
+                    res.status(404).json({ message: 'There is no user with this ID, please try again.' });
+                    return;
+                }
+
+                res.json(userData);
+            })
+            .catch(err => res.status(400).json(err));
+    },
 }
 
 module.exports = userController;
