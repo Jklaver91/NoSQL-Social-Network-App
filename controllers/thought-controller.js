@@ -38,6 +38,17 @@ const thoughtController = {
                     res.status(400).json(err);
                 });
         },
+        updateThought({ params, body }, res) {
+            Thought.findByIdAndUpdate({ _id: params.thoughtId }, body, { runValidators: true, new: true })
+                .then(thoughtData => {
+                    if (!thoughtData) {
+                        res.status(404).json({ message: 'No user found with this ID!' });
+                        return;
+                    }
+                    res.json(dbPizzaData);
+                })
+                .catch(err => res.json(err));
+        },
     }
 
 module.exports = thoughtController;
