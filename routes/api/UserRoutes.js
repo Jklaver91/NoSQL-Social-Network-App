@@ -1,26 +1,18 @@
 const router = require('express').Router();
-const { User } = require('../../models/User');
 
-// Create a User
-router.post('/submit', ({ body }, res) => {
-    User.create(body)
-        .then(dbUserData => {
-            res.json(dbUserData);
-        })
-        .catch(err => {
-            res.json(err);
-        });
-});
+const {
+    getUsers,
+    addUser,
+    getUserByID,
+} = require('../../controllers/user-controller');
 
-// Retrieve all users
-router.get('/users', (req, res) => {
-    User.find()
-        .then(dbUserData => {
-            res.json(dbUserData);
-        })
-        .catch(err => {
-            res.json(err);
-        });
-});
+// /api/users
+router.route('/')
+.get(getUsers)
+.post(addUser);
+
+// /api/users/:id
+router.route('/:id')
+.get(getUserByID)
 
 module.exports = router;
