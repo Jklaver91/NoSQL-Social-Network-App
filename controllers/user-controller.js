@@ -41,7 +41,7 @@ const userController = {
                 res.json(userData);
             })
             .catch(err => res.status(400).json(err));
-    },
+    }
 }
 
 module.exports = userController;
