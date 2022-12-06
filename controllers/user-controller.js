@@ -1,6 +1,11 @@
 const { User } = require('../models');
 
 const userController = {
+    addUser({ body }, res) {
+        User.create(body)
+            .then(userData => res.json(userData))
+            .catch(err => res.status(400).json(err));
+    },
     getUsers(req, res) {
         User.find({})
             .then(userData => res.json(userData))
@@ -8,11 +13,6 @@ const userController = {
                 console.log(err);
                 res.status(400).json(err);
             });
-    },
-    addUser({ body }, res) {
-        User.create(body)
-            .then(userData => res.json(userData))
-            .catch(err => res.status(400).json(err));
     },
     getUserByID({ params }, res) {
         User.findOne({ _id: params.id })
