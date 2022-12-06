@@ -4,6 +4,7 @@ const {
     getUsers,
     addUser,
     getUserByID,
+    deleteUser,
 } = require('../../controllers/user-controller');
 
 // /api/users
@@ -14,5 +15,6 @@ router.route('/')
 // /api/users/:id
 router.route('/:id')
 .get(getUserByID)
+.delete(deleteUser);
 
 module.exports = router;
