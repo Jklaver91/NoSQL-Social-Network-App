@@ -60,15 +60,18 @@ const userController = {
     },
 
     deleteFriend({params}, res) {
-        User.findOneAndDelete({friends: params.friendID})
-        .then(userData => {
-            if(!userData) {
-                res.status(404).json({ message: 'There is no friend with this ID, please try again.' });
-                return;
-            }
-            res.json(userData);
-        })
-        .catch(err => res.status(400).json(err));
+        User.findOneAndUpdate(
+            { _id: params.id },
+            { $pull: { friends: params.friendID } },
+            { new: true }
+          )
+            .then((userData) => {
+              if (!userData) {
+                return res.status(404).json({ message: "No user with this id!" });
+              }
+              res.json(userData);
+            })
+            .catch((err) => res.json(err));
     }
 }
 
